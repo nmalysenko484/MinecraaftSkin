@@ -1,6 +1,6 @@
 """Generates skin.png — a 64x64 Minecraft skin (classic 4px arms).
 
-Based on reference photos: short straight dark-brown hair with a messy
+Based on reference photos: curly dark-brown hair with a messy
 fringe and visible ears, grey-blue eyes, white ribbed tank top with open
 shoulders, dark burgundy sweater tied over the shoulders (sleeves knotted on
 the chest, hood draped on the back), black leather belt with a steel buckle,
@@ -15,17 +15,17 @@ from PIL import Image
 T = None  # transparent
 
 # ---------- palette ----------
-SKIN = [(242, 204, 176), (230, 188, 158), (214, 170, 140), (192, 148, 120)]
-EAR = (204, 150, 128)
-HAIR = [(26, 18, 14), (38, 27, 20), (52, 37, 27), (68, 49, 35), (84, 62, 45)]
+SKIN = [(232, 182, 142), (221, 168, 126), (204, 150, 110), (182, 131, 94)]
+EAR = (198, 140, 106)
+HAIR = [(24, 16, 11), (38, 26, 18), (54, 37, 26), (72, 50, 35), (92, 65, 45)]
 EYE_W = (232, 232, 230)
 IRIS = (104, 124, 134)
 BROW = (40, 28, 21)
-LIPS = (196, 140, 124)
+LIPS = (186, 124, 100)
 MAR = [(46, 14, 22), (62, 20, 30), (78, 27, 38), (94, 36, 47), (110, 47, 57)]
 TANK = [(244, 244, 242), (230, 230, 228), (212, 212, 212)]
-DEN = [(22, 22, 25), (31, 31, 35), (40, 40, 45), (52, 52, 58)]
-STITCH = (74, 70, 64)
+DEN = [(13, 13, 15), (19, 19, 22), (26, 26, 30), (34, 34, 38)]
+STITCH = (52, 49, 45)
 BELT = [(24, 22, 22), (40, 37, 36)]
 STEEL = [(196, 198, 204), (150, 152, 160), (104, 106, 114)]
 DIAL = (20, 22, 26)
@@ -48,13 +48,19 @@ def face(x0, y0, w, h, fn):
 
 
 def hair(i, j, top=False):
-    """Straight hair: vertical strands, slightly lighter on top."""
-    strand = (i * 7 + 3) % 5
-    k = 1 + (strand % 3 == 0) + (1 if top else 0)
-    if rnd.random() < 0.18:
+    """Curly hair: staggered 2x2 curls, lit on top-left, shadow bottom-right."""
+    shift = ((j // 2) * 3 + (i // 4)) % 2
+    lx, ly = (i + shift) % 2, (j + (i // 2) % 2) % 2
+    if lx == 0 and ly == 0:
+        k = 3
+    elif lx == 1 and ly == 1:
+        k = 1
+    else:
+        k = 2
+    if top:
         k += 1
-    if rnd.random() < 0.15:
-        k -= 1
+    if rnd.random() < 0.25:
+        k += rnd.choice((-1, 1))
     return HAIR[max(0, min(4, k))]
 
 
@@ -64,7 +70,7 @@ def skin(i, j, shade=1):
 
 def denim(i, j):
     r = rnd.random()
-    return DEN[1] if r < 0.6 else (DEN[2] if r < 0.9 else DEN[0])
+    return DEN[1] if r < 0.7 else (DEN[2] if r < 0.88 else DEN[0])
 
 
 # =====================================================================
@@ -77,7 +83,7 @@ face(16, 0, 8, 8, lambda i, j: SKIN[2])
 FRONT = [
     "HHHHHHHH",
     "HHHHHHHH",
-    "HHsHHHsH",
+    "HssssssH",
     "sBBssBBs",
     "sWIssIWs",
     "ssssnsss",
@@ -133,15 +139,13 @@ face(24, 8, 8, 8, lambda i, j: hair(i, j) if j <= 5 or (j == 6 and 1 <= i <= 6)
 
 # ---- hat overlay: modest volume, messy fringe ----
 face(40, 0, 8, 8, lambda i, j: hair(i, j, top=True))
-FRINGE = [3, 2, 3, 4, 3, 2, 3, 3]  # rows covered per column (front)
+FRINGE = [4, 2, 3, 2, 2, 3, 2, 4]  # mirror-symmetric; brows (row 3) stay clear
 
 
 def hat_front(i, j):
     d = FRINGE[i]
-    if j < d - 1:
+    if j < d and (j < 3 or i in (0, 7)):
         return hair(i, j, top=(j == 0))
-    if j == d - 1:
-        return hair(i, j) if i % 2 == 0 or d >= 3 else T
     return T
 
 
@@ -151,7 +155,9 @@ face(40, 8, 8, 8, hat_front)
 def hat_side(front_on_right):
     def fn(i, j):
         f = i if front_on_right else 7 - i
-        limit = 3 if f >= 5 else (4 if f >= 3 else 6)
+        limit = 4 if f >= 5 else (4 if f >= 3 else 7)
+        if j == limit and f in (1, 5, 6) :
+            return hair(i, j)  # curls poking out below the line
         if j < limit:
             return hair(i, j, top=(j == 0))
         return T
@@ -161,7 +167,7 @@ def hat_side(front_on_right):
 face(32, 8, 8, 8, hat_side(True))
 face(48, 8, 8, 8, hat_side(False))
 face(56, 8, 8, 8, lambda i, j: hair(i, j, top=(j == 0))
-     if j <= 4 or (j == 5 and i % 3 != 0) else T)
+     if j <= 5 or (j == 6 and i % 3 != 0) else T)
 
 # =====================================================================
 # BODY  base (16,16) / overlay (16,32)
@@ -272,13 +278,8 @@ def arm_face(inner=False, watch=None):
     def fn(i, j):
         if watch == "strap" and j == WRIST:
             return STRAP[0] if i % 2 == 0 else STRAP[1]
-        if watch == "case" and WRIST - 1 <= j <= WRIST + 1:
-            if i in (1, 2):
-                if j == WRIST:
-                    return DIAL if i == 1 else STEEL[1]
-                return STEEL[0] if i == 1 else STEEL[1]
-            if j == WRIST:
-                return STRAP[0]
+        if watch == "case" and j == WRIST:
+            return (STRAP[1], STEEL[0], DIAL, STRAP[1])[i]
         shade = 2 if inner else 1
         if j == 0 or j >= 11:
             shade = 2
@@ -307,16 +308,6 @@ def build_arm(bx, by, ox, oy, is_right, watch=False):
     face(ox + 4, oy + 4, 4, 12, lambda i, j: MAR[2] if j == 0 and i in front_inner else T)
     face(ox + 12, oy + 4, 4, 12, lambda i, j: MAR[2] if j == 0 and i in back_inner else T)
 
-    if watch:  # watch on the overlay too, so the case stands out in 3D
-        oo = (ox, oy + 4) if is_right else (ox + 8, oy + 4)
-        oi = (ox + 8, oy + 4) if is_right else (ox, oy + 4)
-        case = arm_face(watch="case")
-        face(*oo, 4, 12, lambda i, j: case(i, j)
-             if WRIST - 1 <= j <= WRIST + 1 and (i in (1, 2) or j == WRIST) else T)
-        strap = lambda i, j: (STRAP[0] if i % 2 == 0 else STRAP[1]) if j == WRIST else T
-        face(*oi, 4, 12, strap)
-        face(ox + 4, oy + 4, 4, 12, strap)
-        face(ox + 12, oy + 4, 4, 12, strap)
 
 
 build_arm(40, 16, 40, 32, is_right=True)
