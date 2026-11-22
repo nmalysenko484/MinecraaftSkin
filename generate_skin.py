@@ -87,14 +87,15 @@ FRONT = [
     "HHHHHHHH",
     "HHHHHHHH",
     "HssHssHH",
-    "HLLssLLH",
+    "HLLdsLLH",
     "HWIssIWH",
-    "ssssssss",
+    "dssssssd",
     "ssssssss",
     "ssssssss",
 ]
 FACE = {
     "s": SKIN[1],
+    "d": (210, 154, 114),     # soft shadow cast by the hair
     "L": (50, 33, 24),         # upper lid / brow line
     "W": (230, 228, 222),
     "I": (34, 72, 80),         # dark teal iris
