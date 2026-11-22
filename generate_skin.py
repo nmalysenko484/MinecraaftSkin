@@ -80,28 +80,29 @@ def denim(i, j):
 face(8, 0, 8, 8, lambda i, j: hair(i, j, top=True))
 face(16, 0, 8, 8, lambda i, j: SKIN[2])
 
-# Face: symmetric. Brows row 3, eyes row 4 (white outside, iris inside),
-# clean even skin (no shading: it read as stubble), no mouth.
+# Face: symmetric, no mouth. Volume comes from warm highlights down the
+# middle (between the brows, nose bridge), a soft nose tip, light blush and
+# warm shading only at the temples -- no grey shadows on the jaw (they read
+# as stubble).
 FRONT = [
     "HHHHHHHH",
     "HHHHHHHH",
     "HhhhhhhH",
-    "sBBssBBs",
-    "sWIssIWs",
-    "ssssssss",
-    "ssssssss",
+    "eBBhhBBe",
+    "eWIhhIWe",
+    "ebsnnsbe",
+    "esssssse",
     "ssssssss",
 ]
 FACE = {
-    "h": SKIN[0],              # forehead highlight
+    "h": SKIN[0],              # highlight: forehead, between brows, nose bridge
     "s": SKIN[1],
-    "S": SKIN[2],              # face sides / jaw
+    "e": (214, 156, 114),      # warm shade at the temples / cheek edges
+    "n": (216, 158, 118),      # soft nose tip
+    "b": (226, 164, 132),      # light blush
     "B": BROW,
     "W": EYE_W,
     "I": IRIS,
-    "u": (214, 158, 118),      # faint shadow under the eyes
-    "t": (200, 140, 104),      # mouth, left half
-    "m": (200, 140, 104),      # mouth, right half
 }
 
 
