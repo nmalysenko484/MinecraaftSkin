@@ -18,9 +18,9 @@ T = None  # transparent
 SKIN = [(232, 182, 142), (221, 168, 126), (204, 150, 110), (182, 131, 94)]
 EAR = (198, 140, 106)
 HAIR = [(24, 16, 11), (38, 26, 18), (54, 37, 26), (72, 50, 35), (92, 65, 45)]
-EYE_W = (232, 232, 230)
+EYE_W = (226, 226, 222)
 IRIS = (104, 124, 134)
-BROW = (40, 28, 21)
+BROW = (62, 43, 31)
 LIPS = (186, 124, 100)
 MAR = [(46, 14, 22), (62, 20, 30), (78, 27, 38), (94, 36, 47), (110, 47, 57)]
 TANK = [(244, 244, 242), (230, 230, 228), (212, 212, 212)]
@@ -80,37 +80,36 @@ def denim(i, j):
 face(8, 0, 8, 8, lambda i, j: hair(i, j, top=True))
 face(16, 0, 8, 8, lambda i, j: SKIN[2])
 
+# Face: symmetric. Brows row 3, eyes row 4 (white outside, iris inside),
+# soft under-eye/nose shading, neutral closed mouth, shaded jaw.
 FRONT = [
     "HHHHHHHH",
     "HHHHHHHH",
-    "HssssssH",
+    "HhhhhhhH",
     "sBBssBBs",
     "sWIssIWs",
-    "ssssnsss",
-    "sssLLsss",
-    "Jsssssss",
+    "SuussuuS",
+    "SsstmssS",
+    "SSsssSSS",
 ]
+FACE = {
+    "h": SKIN[0],              # forehead highlight
+    "s": SKIN[1],
+    "S": SKIN[2],              # face sides / jaw
+    "B": BROW,
+    "W": EYE_W,
+    "I": IRIS,
+    "u": (214, 158, 118),      # faint shadow under the eyes
+    "t": (200, 140, 104),      # mouth, left half
+    "m": (200, 140, 104),      # mouth, right half
+}
 
 
 def head_front(i, j):
     k = FRONT[j][i]
     if k == "H":
         return hair(i, j)
-    if k == "B":
-        return BROW
-    if k == "W":
-        return EYE_W
-    if k == "I":
-        return IRIS
-    if k == "L":
-        return LIPS
-    if k == "n":
-        return SKIN[2]
-    if k == "J" or (j == 7 and i == 7):
-        return SKIN[2]
-    if i in (0, 7):
-        return SKIN[2]
-    return SKIN[1]
+    return FACE[k]
 
 
 face(8, 8, 8, 8, head_front)
@@ -139,7 +138,7 @@ face(24, 8, 8, 8, lambda i, j: hair(i, j) if j <= 5 or (j == 6 and 1 <= i <= 6)
 
 # ---- hat overlay: modest volume, messy fringe ----
 face(40, 0, 8, 8, lambda i, j: hair(i, j, top=True))
-FRINGE = [4, 2, 3, 2, 2, 3, 2, 4]  # mirror-symmetric; brows (row 3) stay clear
+FRINGE = [3, 2, 2, 3, 3, 2, 2, 3]  # mirror-symmetric; brows (row 3) stay clear
 
 
 def hat_front(i, j):
@@ -186,8 +185,8 @@ def tank(i):
 
 def torso(i, j, side="front"):
     if j == 9:  # belt
-        if side == "front" and i in (2, 3):
-            return STEEL[0] if i == 2 else STEEL[1]
+        if side == "front" and i in (3, 4):  # buckle, centred
+            return STEEL[0] if i == 3 else STEEL[1]
         return BELT[1] if (i + j) % 5 == 0 else BELT[0]
     if j >= 10:  # jeans waist
         if side == "front" and j == 10 and i in (0, 7):
