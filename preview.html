@@ -1,0 +1,82 @@
+<title>Мой скин Minecraft</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;700&family=Inter:wght@400;500&display=swap">
+<style>
+/* Layout: 3D stage left, controls + texture sheet right; stacks on phones */
+:root{
+  --bg:#ecebf0; --panel:#ffffff; --fg:#1d1b22; --muted:#5d5866; --line:#d6d3dd;
+  --accent:#7a2430; --stage:#d9d6e0;
+  --display:"Pixelify Sans",ui-monospace,monospace; --body:"Inter",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#16151b; --panel:#201e27; --fg:#ece9f2; --muted:#a39dae; --line:#34303d; --accent:#c45563; --stage:#24212c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#16151b; --panel:#201e27; --fg:#ece9f2; --muted:#a39dae; --line:#34303d; --accent:#c45563; --stage:#24212c; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1040px;margin:0 auto;padding-block:28px 40px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px}
+@media (max-width:760px){.wrap{grid-template-columns:1fr}}
+h1{font-family:var(--display);font-weight:700;font-size:2rem;line-height:1.1;margin:0 0 6px;text-wrap:balance}
+.stage{background:var(--stage);border-radius:6px;overflow:hidden;aspect-ratio:3/4;max-width:100%;position:relative}
+.stage canvas{width:100%!important;height:100%!important;display:block}
+.hint{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--muted)}
+.side{display:flex;flex-direction:column;gap:18px;min-width:0}
+p{margin:0;color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+button{font:500 14px var(--body);padding:8px 14px;border-radius:4px;border:1px solid var(--line);background:var(--panel);color:var(--fg);cursor:pointer}
+button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.label{font-family:var(--display);font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sheet{image-rendering:pixelated;width:100%;max-width:320px;aspect-ratio:1;border:1px solid var(--line);
+  background:repeating-conic-gradient(var(--line) 0 25%,transparent 0 50%) 0 0/16px 16px}
+ul{margin:0;padding-left:18px;color:var(--muted)}
+li{margin-block:2px}
+</style>
+<div class="wrap">
+  <div class="stage" id="stage"><span class="hint">Тяни мышкой или пальцем, чтобы повернуть</span></div>
+  <div class="side">
+    <div>
+      <h1>Скин: свитер на плечах</h1>
+      <p>Классическая модель (руки 4 px), 64×64, оба слоя: волосы и свитер объёмные за счёт внешнего слоя.</p>
+    </div>
+    <div class="row" role="group" aria-label="Анимация">
+      <button id="a-idle" aria-pressed="true">Стоит</button>
+      <button id="a-walk" aria-pressed="false">Идёт</button>
+      <button id="a-run" aria-pressed="false">Бежит</button>
+      <button id="layer" aria-pressed="true">Внешний слой</button>
+    </div>
+    <div>
+      <div class="label">Развёртка 64×64</div>
+      <img class="sheet" alt="Текстура скина 64 на 64" src="data:image/png;base64,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">
+    </div>
+    <ul>
+      <li>Волосы: кудрявые, тёмно-каштановые</li>
+      <li>Бордовый свитер завязан на груди, капюшон лежит на спине</li>
+      <li>Белая майка, ремень с пряжкой, чёрные карго</li>
+      <li>Белые кроссовки, чёрный браслет на левой руке</li>
+    </ul>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/skinview3d@3.1.0/bundles/skinview3d.bundle.js"></script>
+<script>
+const SKIN="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAI3ElEQVR4nO1bT2gc1xn/rVjQjrWZXY2fVa2i1aqOUVYibXFN01iHEnAbenDBNdSHXipoDqEQp9CSJpgIahIKbg4lhxAKKYIeWkpJBXF7KQ3Fh3WhcZ3aQdosqtnVqqt4MxnPjnc90ml72HxP783Ov9XMSqbkB0b7/sz33vf/vW/GCQTgxXOnugCwVtPBMgr0li2NX3nhgu/zC0u/TAStEWb9a7frKOY1TGTHAABNswO9ZePqzVok+iODTC7XDSwUGACAZRSwjBJl7YFRrhsAesrQWzYqDTMyzWTQhLWazn8X8xoAoNIwXa1hGFir6dAtG0zdEzjLKCitb2NxPofK3VYk+qEsgBaeyI6haXYwN5WF3rIPzAJE5ptmh7tBaX07Mu1ACyCTB/asgWUULoxhg9aiGETrnjt9AgBwZfVGJPqBFkBMkrQrDRN6y8bq9Y1ICw+CptnhLrd6fQN6y0bT7MSyh0ALIIkvzuekfmf7IKBbNuamslwYBxIDyAL0lt37Z9m8Tb44bIhr6ZYda/BNnD1Z6BJTwF7AIWaZuhd5/RYmGkZ7FwAwN5Xl/UxVUGmYmJvKotIwsTif4/QpsxBtMeCu1XQeg5pmB+W6wfcnBsDF+RwfWygwyW0pVojxS2/ZWCgwrNV0jNDGRUZFULtcN3jup3+69ZmQMgqYqnBmzp0+Ad3q5WkSiJYelZivNEwwtRfUJrJjkmWRjy8UGK7drmP1+gZnkBgjAZOwRJBwFudzexYs0BcFMsJUBd/4Up4zUVrf5gcOemChwMBUBa++8H2U1rf5JkXBidpomh0wVYGWHuVaL+Y1HjdEi6ONiGcMMvNrt+u9vrutRDGv4erNWqLSMKGlR6FbNrT0KLeOYl4Dyyg8XpXrhnRwIssRD3C6ZfdiQNPsSCZltHfBMj2N6paN0tp/YXZ6mnzvrZ/A7Ozytm7ZKK1vc6IkQFH7oraIPvXRpun33FQWRntXcj8AWPl7OUHCYKqCf/ynmSDapAxSTLlu8LXJcsmVJrJjfH4xryFJuRWQz/Vq5hEAwHOX38bKX29g8cc/5WPNJ7+N0q9ex9K3TuGt5R8CAKzWfT5+ZeVd6ahaaZj89+J8TmKeb96yYbR3sTif4/1Xb9YSZ08WunCAzv9MVfjvsycLXYozTFX64sHq9Y2e5QgHOL1l94Igyygo1w385pUfwDBa0LQMF4DVui/9FoXjHKNnr6y8y9Mn/SWtUAwQmaf1AXDNDoq5L2S6lbutxNLTxS65LSAf5bmAPlubZZQ9Aby49B1XwsQgAFT+fae32FeO8z5R8yLO/ezXAHrBr5jXpLjCVEWKA+QSUW92BLIaiheEYl6ThK9bNpIUxb0gajkM4wQtPQqmKqGuy2dPFrpxMQ+Auw7t4erNWuKpxya65FZPPTbRpTjSt2h+Kif53Nsrv5PGn3nmad+Nbm1t9vmsiNNPft138/XGtj/9P12W6DsVMWj9IfAovG/8c0Vuf21paEtFwUAFkf9HDM8CHlKNO5FgmtbVsioAwN7Z5X+V1Kg0UUmN8n6ap6RG8f4HH2DrndekudPnL8H62xtSn3rmIrbeeQ3T5y+5zg/TR6B0GwZBMSEpMuQFJTUKw7TgnEu/p89fAgBUq5tI/uu3AHoMkxDUMxclejQfAGdS7BOhZh7B2DhD595ePs/NfpG3nUHQbb4feAwQtU4WQW0aE63CaSEAMDs7I2/mzEWoZy6iWt0MtZlBEJSGw2Lk2NFxHDs6jplHJ5EeOwLA3RWcVuJlNeo3n+/rI8G4jbn1uY25aToOIYwAQLvzAO3OA94paptM38383ayA4KX1IGvwGhdPpH59g8I1DRqmBcO0AMDV7EWBVKubfZv2Y5KsgeYYhim1nW40bIQ+B3i5AtC/6dnZmUBGaFzTsq40gkDmbxjRaoLJTz69x7UppjcArmnPmQ41LQvLsmAYJmfGsizvjbuMOfskWq37GBtnfc+Q+YdNh17wtQAtq/b5upff04bjgEgrjJ9HsYIE0zTfy0sQjoylPcdeenkZt27dwl/+vLpv+qU3nvUdd8sOIqa/u+x/EKpuRsvRX/3yE5KLUNYAgF+8+orrM36HL79YEwbi9T0MkqXS+1LHiROzUntjoxpIxN7Z5YenoDkiY05m3c4a+8n1gzwTWxGCsPzEKV+XuvzhjUhrOulHpTe026BzY0GCOSx8Xg8YFuGHVeNOJPJTua4YjIJqck78aPZxiVGWTkNvt13nuo359bG0d4oNi6AYkQT2n3LcoLfb0Hd2wFIpuX9nx5UhYt5NEF6CjBMJpmldfqzNqqjcqcaSGS5MFrpF1jvClnUdf/jYu+x9YbLQdRMYPXNhslfn96OxXyRnHp2Mm+bAYKmUZAEsne5Zy8c1AMNhnOBaD4gDLJVCWdf5bz+8Wf0oQXOBnsVEze9h8dCkwSJjPEYECSxODK8sPiAuf3gjMUxf90Ky3XkgncXnjs92xQsNwVkXoPlh0mbYdHaQjBOSzqIH4H7nd0uVfulzzbwHAGhu1WPY5vAQuR6gG8aBay1ORN48vVkyTKvvukvwugpTGc5rDAh+WxwVsWUBr7KZ84UKQXzZ4lYH8Cu5x4nYpRv5+4KI7/8HrRc8NOeAw8LnAjjsDRw2AmOA06edUXnu+Cwf96v0OrMEBbnV5e8NvGkRv3/9vUjPhz4Ke5WyvVKbGOHFqnFQ2dvt/b5fO2rNIFAAxITb8Rhwf4Xulvqcr9z3m+acr8rerH4UaMV+d4xAAaTHjvDvBgCg3pD/n474xtjtVfqxo+PSfLp77LcKJb70CFv/97tjhAqCYeoFfh9TuD0f5tOcIAzt+4BB4MZ0kIbFEtxhI3I9QAx61CYE3SrjLMbuF0lnmnPik0/vSd8DiPOdmnRebJyWIAZSNxcwjFafj8dh5n6QXMAZwOivaKpuGjRMq+8Zr+8K/aBpGSmwDZt5IIZ6QFSkjqQxM3Mcm5t3eN8g7a2tzUgXusi3wXa7HUmAm3/8udQeVOtBH0AEIXIQjPp9wbSjHdcHkGHxP1RLfF5HN4yeAAAAAElFTkSuQmCC";
+const stage=document.getElementById('stage');
+const v=new skinview3d.SkinViewer({width:400,height:533,skin:SKIN,model:"default"});
+stage.prepend(v.canvas);
+v.background=null; v.zoom=0.85; v.fov=40;
+v.camera.position.set(22,10,42);
+v.controls.enablePan=false;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+v.autoRotate=!reduce; v.autoRotateSpeed=0.6;
+v.animation=new skinview3d.IdleAnimation();
+function fit(){const r=stage.getBoundingClientRect();v.setSize(r.width,r.height);}
+new ResizeObserver(fit).observe(stage); fit();
+const anims={"a-idle":()=>new skinview3d.IdleAnimation(),"a-walk":()=>new skinview3d.WalkingAnimation(),"a-run":()=>new skinview3d.RunningAnimation()};
+for(const id in anims){document.getElementById(id).addEventListener('click',e=>{
+  for(const k in anims)document.getElementById(k).setAttribute('aria-pressed',k===id);
+  v.animation=anims[id]();});}
+const lb=document.getElementById('layer');
+lb.addEventListener('click',()=>{const on=lb.getAttribute('aria-pressed')!=='true';lb.setAttribute('aria-pressed',on);
+  for(const p of ['head','body','rightArm','leftArm','rightLeg','leftLeg'])v.playerObject.skin[p].outerLayer.visible=on;});
+</script>
