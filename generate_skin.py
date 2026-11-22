@@ -9,6 +9,7 @@ sneakers, steel watch with a brown leather strap on the left wrist.
 
 Run:  python3 generate_skin.py
 """
+import os
 import random
 from PIL import Image
 
@@ -83,18 +84,27 @@ face(16, 0, 8, 8, lambda i, j: SKIN[2])
 # Face (no mouth), modelled on the approved concept art: depth comes from
 # the hair framing the face (side locks down to eye level), a dark lid line
 # right above each eye and dark teal irises -- the skin itself stays even.
-FRONT = [
-    "HHHHHHHH",
-    "HHHHHHHH",
-    "HssHssHH",
-    "HLLdsLLH",
-    "HWIssIWH",
-    "dssssssd",
-    "ssssssss",
-    "ssssssss",
-]
+FACE_VARIANTS = {
+    # current: shadow under the centre strand and under both side locks
+    "0": ["HHHHHHHH", "HHHHHHHH", "HssHssHH", "HLLdsLLH",
+          "HWIssIWH", "dssssssd", "ssssssss", "ssssssss"],
+    # 1: + a one-pixel nose shadow
+    "1": ["HHHHHHHH", "HHHHHHHH", "HssHssHH", "HLLdsLLH",
+          "HWIssIWH", "dssdsssd", "ssssssss", "ssssssss"],
+    # 2: longer shadows down the cheeks, nothing on the bridge
+    "2": ["HHHHHHHH", "HHHHHHHH", "HssHssHH", "HLLssLLH",
+          "HWIssIWH", "dssssssd", "dssssssd", "ssssssss"],
+    # 3: eye-socket depth between the eyes + shadows under side locks
+    "3": ["HHHHHHHH", "HHHHHHHH", "HssHssHH", "HLLdsLLH",
+          "HWIddIWH", "dssssssd", "ssssssss", "ssssssss"],
+    # 4: current shadows + light cheekbones for contrast
+    "4": ["HHHHHHHH", "HHHHHHHH", "HssHssHH", "HLLdsLLH",
+          "HWIssIWH", "dhsssshd", "ssssssss", "ssssssss"],
+}
+FRONT = FACE_VARIANTS[os.environ.get("FACE", "0")]
 FACE = {
     "s": SKIN[1],
+    "h": SKIN[0],              # highlight
     "d": (210, 154, 114),     # soft shadow cast by the hair
     "L": (50, 33, 24),         # upper lid / brow line
     "W": (230, 228, 222),
