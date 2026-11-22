@@ -80,29 +80,55 @@ def denim(i, j):
 face(8, 0, 8, 8, lambda i, j: hair(i, j, top=True))
 face(16, 0, 8, 8, lambda i, j: SKIN[2])
 
-# Face: symmetric, no mouth. Volume comes from warm highlights down the
-# middle (between the brows, nose bridge), a soft nose tip, light blush and
-# warm shading only at the temples -- no grey shadows on the jaw (they read
-# as stubble).
-FRONT = [
-    "HHHHHHHH",
-    "HHHHHHHH",
-    "HhhhhhhH",
-    "eBBhhBBe",
-    "eWIhhIWe",
-    "ebsnnsbe",
-    "esssssse",
-    "ssssssss",
-]
+# Face variants (no mouth). Pick with FACE=A|B|C (default A).
+#   A: shadow from the fringe on the forehead, cheekbone highlights
+#   B: light from one side: lit left half, warm shade on the right, side nose
+#   C: taller eyes (iris two pixels high), highlight down the nose
+import os
+FACE_VARIANT = os.environ.get("FACE", "A")
+FACES = {
+    "A": [
+        "HHHHHHHH",
+        "HHHHHHHH",
+        "HffffffH",
+        "fBBssBBf",
+        "sWIssIWs",
+        "shsssshs",
+        "ssssssss",
+        "ssssssss",
+    ],
+    "B": [
+        "HHHHHHHH",
+        "HHHHHHHH",
+        "HhhhsssH",
+        "hBBhsBBd",
+        "hWIhsIWd",
+        "hhhhnssd",
+        "hhhsssdd",
+        "hhssssdd",
+    ],
+    "C": [
+        "HHHHHHHH",
+        "HHHHHHHH",
+        "HssssssH",
+        "sBBssBBs",
+        "sWIhhIWs",
+        "ssJhhJss",
+        "ssssssss",
+        "ssssssss",
+    ],
+}
+FRONT = FACES[FACE_VARIANT]
 FACE = {
-    "h": SKIN[0],              # highlight: forehead, between brows, nose bridge
+    "h": SKIN[0],              # highlight
     "s": SKIN[1],
-    "e": (214, 156, 114),      # warm shade at the temples / cheek edges
-    "n": (216, 158, 118),      # soft nose tip
-    "b": (226, 164, 132),      # light blush
+    "f": (204, 148, 108),      # shadow cast by the fringe
+    "d": (208, 150, 110),      # warm side shade
+    "n": (206, 148, 108),      # nose side
     "B": BROW,
     "W": EYE_W,
     "I": IRIS,
+    "J": (72, 90, 100),        # lower, darker half of the iris
 }
 
 
