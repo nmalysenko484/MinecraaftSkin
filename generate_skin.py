@@ -102,10 +102,21 @@ FACE_VARIANTS = {
           "HWIssIWH", "dhsssshd", "ssssssss", "ssssssss"],
 }
 FRONT = FACE_VARIANTS[os.environ.get("FACE", "0")]
+
+# Mouth variants on row 6 (MOUTH=0 means no mouth). Default: 1.
+MOUTHS = {
+    "0": "ssssssss",
+    "1": "sssmmsss",   # short, neutral, close to skin tone
+    "2": "ssmmmmss",   # wider and fainter
+    "3": "sssMmsss",   # slight half-smile: one side darker
+}
+FRONT = FRONT[:6] + [MOUTHS[os.environ.get("MOUTH", "1")]] + FRONT[7:]
 FACE = {
     "s": SKIN[1],
     "h": SKIN[0],              # highlight
     "d": (216, 161, 120),     # soft shadow cast by the hair
+    "m": (204, 145, 108),     # mouth
+    "M": (192, 132, 98),      # mouth, darker corner
     "L": (50, 33, 24),         # upper lid / brow line
     "W": (230, 228, 222),
     "I": (34, 72, 80),         # dark teal iris
