@@ -105,7 +105,7 @@ FRONT = FACE_VARIANTS[os.environ.get("FACE", "0")]
 FACE = {
     "s": SKIN[1],
     "h": SKIN[0],              # highlight
-    "d": (210, 154, 114),     # soft shadow cast by the hair
+    "d": (216, 161, 120),     # soft shadow cast by the hair
     "L": (50, 33, 24),         # upper lid / brow line
     "W": (230, 228, 222),
     "I": (34, 72, 80),         # dark teal iris
