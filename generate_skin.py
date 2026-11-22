@@ -80,55 +80,24 @@ def denim(i, j):
 face(8, 0, 8, 8, lambda i, j: hair(i, j, top=True))
 face(16, 0, 8, 8, lambda i, j: SKIN[2])
 
-# Face variants (no mouth). Pick with FACE=A|B|C (default A).
-#   A: shadow from the fringe on the forehead, cheekbone highlights
-#   B: light from one side: lit left half, warm shade on the right, side nose
-#   C: taller eyes (iris two pixels high), highlight down the nose
-import os
-FACE_VARIANT = os.environ.get("FACE", "A")
-FACES = {
-    "A": [
-        "HHHHHHHH",
-        "HHHHHHHH",
-        "HffffffH",
-        "fBBssBBf",
-        "sWIssIWs",
-        "shsssshs",
-        "ssssssss",
-        "ssssssss",
-    ],
-    "B": [
-        "HHHHHHHH",
-        "HHHHHHHH",
-        "HhhhsssH",
-        "hBBhsBBd",
-        "hWIhsIWd",
-        "hhhhnssd",
-        "hhhsssdd",
-        "hhssssdd",
-    ],
-    "C": [
-        "HHHHHHHH",
-        "HHHHHHHH",
-        "HssssssH",
-        "sBBssBBs",
-        "sWIhhIWs",
-        "ssJhhJss",
-        "ssssssss",
-        "ssssssss",
-    ],
-}
-FRONT = FACES[FACE_VARIANT]
+# Face (no mouth), modelled on the approved concept art: depth comes from
+# the hair framing the face (side locks down to eye level), a dark lid line
+# right above each eye and dark teal irises -- the skin itself stays even.
+FRONT = [
+    "HHHHHHHH",
+    "HHHHHHHH",
+    "HssHssHH",
+    "HLLssLLH",
+    "HWIssIWH",
+    "ssssssss",
+    "ssssssss",
+    "ssssssss",
+]
 FACE = {
-    "h": SKIN[0],              # highlight
     "s": SKIN[1],
-    "f": (204, 148, 108),      # shadow cast by the fringe
-    "d": (208, 150, 110),      # warm side shade
-    "n": (206, 148, 108),      # nose side
-    "B": BROW,
-    "W": EYE_W,
-    "I": IRIS,
-    "J": (72, 90, 100),        # lower, darker half of the iris
+    "L": (50, 33, 24),         # upper lid / brow line
+    "W": (230, 228, 222),
+    "I": (34, 72, 80),         # dark teal iris
 }
 
 
@@ -163,15 +132,15 @@ face(16, 8, 8, 8, head_side(False))
 face(24, 8, 8, 8, lambda i, j: hair(i, j) if j <= 5 or (j == 6 and 1 <= i <= 6)
      else SKIN[2])
 
-# ---- hat overlay: modest volume, messy fringe ----
+# ---- hat overlay: curly volume, side locks frame the face ----
 face(40, 0, 8, 8, lambda i, j: hair(i, j, top=True))
-FRINGE = [3, 2, 2, 3, 3, 2, 2, 3]  # mirror-symmetric; brows (row 3) stay clear
-
-
 def hat_front(i, j):
-    d = FRINGE[i]
-    if j < d and (j < 3 or i in (0, 7)):
+    if i in (0, 7):
+        return hair(i, j, top=(j == 0)) if j <= 4 else T   # side locks
+    if j <= 1:
         return hair(i, j, top=(j == 0))
+    if j == 2 and i == 3:
+        return hair(i, j)                                   # fringe strands
     return T
 
 
