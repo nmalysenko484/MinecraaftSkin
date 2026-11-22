@@ -81,16 +81,16 @@ face(8, 0, 8, 8, lambda i, j: hair(i, j, top=True))
 face(16, 0, 8, 8, lambda i, j: SKIN[2])
 
 # Face: symmetric. Brows row 3, eyes row 4 (white outside, iris inside),
-# soft under-eye/nose shading, neutral closed mouth, shaded jaw.
+# clean even skin (no shading: it read as stubble), neutral closed mouth.
 FRONT = [
     "HHHHHHHH",
     "HHHHHHHH",
     "HhhhhhhH",
     "sBBssBBs",
     "sWIssIWs",
-    "SuussuuS",
-    "SsstmssS",
-    "SSsssSSS",
+    "ssssssss",
+    "ssstmsss",
+    "ssssssss",
 ]
 FACE = {
     "h": SKIN[0],              # forehead highlight
