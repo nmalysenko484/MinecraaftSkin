@@ -81,7 +81,7 @@ face(8, 0, 8, 8, lambda i, j: hair(i, j, top=True))
 face(16, 0, 8, 8, lambda i, j: SKIN[2])
 
 # Face: symmetric. Brows row 3, eyes row 4 (white outside, iris inside),
-# clean even skin (no shading: it read as stubble), neutral closed mouth.
+# clean even skin (no shading: it read as stubble), no mouth.
 FRONT = [
     "HHHHHHHH",
     "HHHHHHHH",
@@ -89,7 +89,7 @@ FRONT = [
     "sBBssBBs",
     "sWIssIWs",
     "ssssssss",
-    "ssstmsss",
+    "ssssssss",
     "ssssssss",
 ]
 FACE = {
@@ -154,9 +154,7 @@ face(40, 8, 8, 8, hat_front)
 def hat_side(front_on_right):
     def fn(i, j):
         f = i if front_on_right else 7 - i
-        limit = 4 if f >= 5 else (4 if f >= 3 else 7)
-        if j == limit and f in (1, 5, 6) :
-            return hair(i, j)  # curls poking out below the line
+        limit = 4 if f >= 3 else 6
         if j < limit:
             return hair(i, j, top=(j == 0))
         return T
@@ -166,7 +164,7 @@ def hat_side(front_on_right):
 face(32, 8, 8, 8, hat_side(True))
 face(48, 8, 8, 8, hat_side(False))
 face(56, 8, 8, 8, lambda i, j: hair(i, j, top=(j == 0))
-     if j <= 5 or (j == 6 and i % 3 != 0) else T)
+     if j <= 5 else T)
 
 # =====================================================================
 # BODY  base (16,16) / overlay (16,32)
